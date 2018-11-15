@@ -2,9 +2,13 @@ const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
-const router = require('./router')
+const router = require('./router');
+const mongoose = require('mongoose');
 
 const app = express();
+
+//DB setup
+mongoose.connect('mongodb://localhost:auth/auth', { useNewUrlParser: true }); //needed to add options for latest version
 
 //App setup
 app.use(morgan('combined'));
