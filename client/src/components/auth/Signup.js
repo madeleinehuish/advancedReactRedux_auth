@@ -6,7 +6,9 @@ import * as actions from '../../actions';
 
 class Signup extends Component {
 	onSubmit = (formProps) => {
-		this.props.signup(formProps)
+		this.props.signup(formProps, () => {
+			this.props.history.push('/feature');
+		})
 	}
 
 	render() {
@@ -32,11 +34,16 @@ class Signup extends Component {
 						autoComplete="new-password" //see email field above for why "new-password"
 					/>
 				</fieldset>
+				<div>{this.props.errorMessage}</div>
 				<button>Sign Up!</button>
 			</form>
 		)
 	}
 }
 
+function mapStateToProps(state) {
+	return { errorMessage: state.auth.errorMessage }
+}
+
 //redux helper 'compose' is used to wrap multiple higher order functions for greater code readability
-export default compose( connect(null, actions), reduxForm({ form: 'signup' }) )(Signup);
+export default compose( connect(mapStateToProps, actions), reduxForm({ form: 'signup' }) )(Signup);
